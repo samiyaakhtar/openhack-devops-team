@@ -14,15 +14,16 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
-    echo "az login -u $HACKER_LOGIN -p $HACKER_PASSWORD"
-    az login -u $HACKER_LOGIN -p $HACKER_PASSWORD
-
     #DEBUG
     echo "Build Flavor:" $buildFlavor
     echo "Resource Group:" $resourceGroupName
     echo "Image:" $imageTag
     echo "Relative save location:" $relativeSaveLocation
     echo "DNS Url:" $dnsUrl
+
+    echo "az login -u $HACKER_LOGIN -p $HACKER_PASSWORD"
+    az login -u $HACKER_LOGIN -p $HACKER_PASSWORD
+    az group create --location westus2 --name $resourceGroupName
 
     #get the acr repository id to tag image with.
     ACR_ID=`az acr list -g $resourceGroupName --query "[].{acrLoginServer:loginServer}" --output json | jq .[].acrLoginServer | sed 's/\"//g'`
@@ -52,4 +53,4 @@ steps:
     HACKER_PASSWORD: $(HACKER_PASSWORD)
     imageTag: 3.5
     relativeSaveLocation: ""
-    resourceGroupName: "test"
+    resourceGroupName: "saakhtaopenhackdevopsrg"
