@@ -13,6 +13,12 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
+- script:
+    cd openhack-devops-team/apis/trips/tests/
+    go get
+    go test ./...
+  displayName: "Trips unit test"
+
 - script: |
     #DEBUG
     echo "Build Flavor:" $buildFlavor
@@ -69,7 +75,7 @@ steps:
     cd $wd
 
     echo "Successfully pushed all 4 images for $imageTag"
-  displayName: 'Run a multi-line script'
+  displayName: 'Push to container registry'
   env:
     HACKER_LOGIN: $(HACKER_LOGIN)
     HACKER_PASSWORD: $(HACKER_PASSWORD)
