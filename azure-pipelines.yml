@@ -9,13 +9,61 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  TAG: ''
-
 steps:
+# - script: |
+
+#     echo "az login -u $HACKER_LOGIN -p $HACKER_PASSWORD"
+#     az login -u $HACKER_LOGIN -p $HACKER_PASSWORD
+
+#     #get the acr repository id to tag image with.
+#     ACR_ID=`az acr list -g $resourceGroupName --query "[].{acrLoginServer:loginServer}" --output json | jq .[].acrLoginServer | sed 's/\"//g'`
+
+#     echo "ACR ID: "$ACR_ID
+#     az acr update -n $registryName --admin-enabled true
+
+#     #Get the acr admin password and login to the registry
+#     acrPassword=$(az acr credential show -n $registryName -o json | jq -r '[.passwords[0].value] | .[]')
+
+#     docker login $ACR_ID -u $registryName -p $acrPassword
+#     echo "Authenticated to ACR with username and password"
+
+#     wd=$(pwd)
+#     TAG=$ACR_ID"/devopsoh/"$imageTag
+#     echo "##vso[task.setvariable variable=TAG;isOutput=true]$TAG"
+#     echo "Setting variable TAG to $TAG"
+#     echo '##vso[task.setvariable variable=sauce]crushed tomatoes'
+#   displayName: "Setup auth with azure"
+#   env:
+#     HACKER_LOGIN: $(HACKER_LOGIN)
+#     HACKER_PASSWORD: $(HACKER_PASSWORD)
+#     imageTag: $(Build.BuildId)
+#     relativeSaveLocation: ""
+#     resourceGroupName: "saakhtaopenhackdevopsrg"
+#     registryName: "saakhtaopenhackacr"
 
 - script: |
+    cd ./apis/poi/tests/UnitTests
+    dotnet test 
+  displayName: "Poi unit test"
 
+- script: |
+    cd ./apis/trips/tests/
+    go get
+    go test ./...
+  displayName: "Trips unit test"
+
+- script: |
+    cd ./apis/user-java/
+    mvn clean test
+  displayName: "User-Java unit test"
+
+- script: |
+    cd ./apis/userprofile/
+    npm install
+    npm run test
+  displayName: "Userprofile unit test"
+
+- script: |
     echo "az login -u $HACKER_LOGIN -p $HACKER_PASSWORD"
     az login -u $HACKER_LOGIN -p $HACKER_PASSWORD
 
@@ -33,43 +81,7 @@ steps:
 
     wd=$(pwd)
     TAG=$ACR_ID"/devopsoh/"$imageTag
-    echo "##vso[task.setvariable variable=TAG;isOutput=true]$TAG"
-    echo "Setting variable TAG to $TAG"
-    echo '##vso[task.setvariable variable=sauce]crushed tomatoes'
-  displayName: "Setup auth with azure"
-  env:
-    HACKER_LOGIN: $(HACKER_LOGIN)
-    HACKER_PASSWORD: $(HACKER_PASSWORD)
-    imageTag: $(Build.BuildId)
-    relativeSaveLocation: ""
-    resourceGroupName: "saakhtaopenhackdevopsrg"
-    registryName: "saakhtaopenhackacr"
 
-# - script: |
-#     cd ./apis/poi/tests/UnitTests
-#     dotnet test 
-#   displayName: "Poi unit test"
-
-# - script: |
-#     cd ./apis/trips/tests/
-#     go get
-#     go test ./...
-#   displayName: "Trips unit test"
-
-# - script: |
-#     cd ./apis/user-java/
-#     mvn clean test
-#   displayName: "User-Java unit test"
-
-# - script: |
-#     cd ./apis/userprofile/
-#     npm install
-#     npm run test
-#   displayName: "Userprofile unit test"
-
-- script: |
-    echo "variable is $TAG $(TAG)"
-    echo my pipeline variable is $(sauce)
     cd ./apis/poi/web
     docker build . -t $TAG-poi
     docker push $TAG-poi
@@ -96,3 +108,10 @@ steps:
 
     echo "Successfully pushed all 4 images for $imageTag"
   displayName: 'Push to container registry'
+  env:
+    HACKER_LOGIN: $(HACKER_LOGIN)
+    HACKER_PASSWORD: $(HACKER_PASSWORD)
+    imageTag: $(Build.BuildId)
+    relativeSaveLocation: ""
+    resourceGroupName: "saakhtaopenhackdevopsrg"
+    registryName: "saakhtaopenhackacr"
