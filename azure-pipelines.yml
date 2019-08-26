@@ -14,7 +14,9 @@ steps:
   displayName: 'Run a one-line script'
 
 - script:
-    cd openhack-devops-team/apis/trips/tests/
+    ls
+    pwd
+    cd ./apis/trips/tests/
     go get
     go test ./...
   displayName: "Trips unit test"
