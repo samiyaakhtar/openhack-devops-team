@@ -50,3 +50,5 @@ steps:
   env:
     HACKER_LOGIN: $(HACKER_LOGIN)
     HACKER_PASSWORD: $(HACKER_PASSWORD)
+    imageTag: 3.5
+    relativeSaveLocation: ""
