@@ -12,6 +12,11 @@ pool:
 steps:
 
 - script: |
+    cd ./apis/poi/tests/
+    dotnet test 
+  displayName: "Poi unit test"
+
+- script: |
     cd ./apis/trips/tests/
     go get
     go test ./...
