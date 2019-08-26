@@ -44,25 +44,21 @@ steps:
 
     TAG=$ACR_ID"/devopsoh/"$imageTag
 
-    TAG="$TAG-poi"
-    echo "TAG: "$TAG
     cd ./apis/poi/web
-    docker build . -t $TAG
-    docker push $TAG
-    echo -e "\nSuccessfully pushed image: "$TAG
+    docker build . -t $TAG-poi
+    docker push $TAG-poi
+    echo -e "\nSuccessfully pushed image: "$TAG-poi
     cd $wd
 
-    TAG="$TAG-trips"
-    echo "TAG: "$TAG
     cd ./apis/trips/
-    docker build . -t $TAG
-    docker push $TAG
-    echo -e "\nSuccessfully pushed image: "$TAG
+    docker build . -t $TAG-trips
+    docker push $TAG-trips
+    echo -e "\nSuccessfully pushed image: "$TAG-trips
   displayName: 'Run a multi-line script'
   env:
     HACKER_LOGIN: $(HACKER_LOGIN)
     HACKER_PASSWORD: $(HACKER_PASSWORD)
-    imageTag: "0.1"
+    imageTag: $(Build.BuildId)
     relativeSaveLocation: ""
     resourceGroupName: "saakhtaopenhackdevopsrg"
     registryName: "saakhtaopenhackacr"
