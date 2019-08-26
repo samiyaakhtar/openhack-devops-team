@@ -50,6 +50,7 @@ steps:
     echo -e "\nSuccessfully pushed image: "$TAG
     cd $HOME
     ls
+    pwd
 
     TAG="$TAG-trips"
     echo "TAG: "$TAG
