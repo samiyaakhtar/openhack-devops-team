@@ -39,23 +39,22 @@ steps:
     echo "Authenticated to ACR with username and password"
 
     git clone https://github.com/samiyaakhtar/openhack-devops-team.git
+    cd openhack-devops-team
+    wd=$(pwd)
 
     TAG=$ACR_ID"/devopsoh/"$imageTag
 
     TAG="$TAG-poi"
     echo "TAG: "$TAG
-    cd ./openhack-devops-team/apis/poi/web
-    pwd
+    cd ./apis/poi/web
     docker build . -t $TAG
     docker push $TAG
     echo -e "\nSuccessfully pushed image: "$TAG
-    cd $HOME
-    ls
-    pwd
+    cd $wd
 
     TAG="$TAG-trips"
     echo "TAG: "$TAG
-    cd ./openhack-devops-team/apis/trips/
+    cd ./apis/trips/
     docker build . -t $TAG
     docker push $TAG
     echo -e "\nSuccessfully pushed image: "$TAG
