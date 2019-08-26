@@ -14,7 +14,33 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
-    cd apis/poi/web
-    docker build . -t openhack-devops-poi
-    docker push openhack-devops-poi
+    #DEBUG
+    echo "Build Flavor:" $buildFlavor
+    echo "Resource Group:" $resourceGroupName
+    echo "Image:" $imageTag
+    echo "Relative save location:" $relativeSaveLocation
+    echo "DNS Url:" $dnsUrl
+
+    #get the acr repository id to tag image with.
+    ACR_ID=`az acr list -g $resourceGroupName --query "[].{acrLoginServer:loginServer}" --output json | jq .[].acrLoginServer | sed 's/\"//g'`
+
+    echo "ACR ID: "$ACR_ID
+
+    #Get the acr admin password and login to the registry
+    acrPassword=$(az acr credential show -n $registryName -o json | jq -r '[.passwords[0].value] | .[]')
+
+    docker login $ACR_ID -u $registryName -p $acrPassword
+    echo "Authenticated to ACR with username and password"
+
+    TAG=$ACR_ID"/devopsoh/"$imageTag
+
+    echo "TAG: "$TAG
+
+    pushd $relativeSaveLocation/openhack-devops-team/apis/poi/web
+
+    docker build . -t $TAG
+
+    docker push $TAG
+
+    echo -e "\nSuccessfully pushed image: "$TAG
   displayName: 'Run a multi-line script'
