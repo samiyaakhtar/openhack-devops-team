@@ -14,8 +14,8 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
-    echo "az login -u $HACKER_LOGIN -p $(HACKER_PASSWORD)"
-    az login -u $HACKER_LOGIN -p $(HACKER_PASSWORD)
+    echo "az login -u $HACKER_LOGIN -p $HACKER_PASSWORD"
+    az login -u $HACKER_LOGIN -p $HACKER_PASSWORD
 
     #DEBUG
     echo "Build Flavor:" $buildFlavor
@@ -47,3 +47,6 @@ steps:
 
     echo -e "\nSuccessfully pushed image: "$TAG
   displayName: 'Run a multi-line script'
+  env:
+    HACKER_LOGIN: $(HACKER_LOGIN)
+    HACKER_PASSWORD: $(HACKER_PASSWORD)
