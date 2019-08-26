@@ -38,19 +38,22 @@ steps:
     docker login $ACR_ID -u $registryName -p $acrPassword
     echo "Authenticated to ACR with username and password"
 
+    git clone https://github.com/samiyaakhtar/openhack-devops-team.git
+
     TAG=$ACR_ID"/devopsoh/"$imageTag
 
     TAG="$TAG-poi"
     echo "TAG: "$TAG
-    pushd $relativeSaveLocation/openhack-devops-team/apis/poi/web
+    cd ./openhack-devops-team/apis/poi/web
     docker build . -t $TAG
     docker push $TAG
     echo -e "\nSuccessfully pushed image: "$TAG
-
+    cd $HOME
+    ls
 
     TAG="$TAG-trips"
     echo "TAG: "$TAG
-    pushd $relativeSaveLocation/openhack-devops-team/apis/trips/
+    cd ./openhack-devops-team/apis/trips/
     docker build . -t $TAG
     docker push $TAG
     echo -e "\nSuccessfully pushed image: "$TAG
