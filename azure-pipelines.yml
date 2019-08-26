@@ -9,6 +9,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  TAG: ''
 
 steps:
 
@@ -31,7 +33,7 @@ steps:
 
     wd=$(pwd)
     TAG=$ACR_ID"/devopsoh/"$imageTag
-    echo "##vso[task.setvariable variable=TAG;isOutput=true]$(TAG)"
+    echo "##vso[task.setvariable variable=TAG;isOutput=true]$TAG"
     echo "Setting variable TAG to $TAG"
     echo '##vso[task.setvariable variable=sauce]crushed tomatoes'
   displayName: "Setup auth with azure"
