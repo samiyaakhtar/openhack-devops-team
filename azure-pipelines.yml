@@ -53,7 +53,7 @@ steps:
   env:
     HACKER_LOGIN: $(HACKER_LOGIN)
     HACKER_PASSWORD: $(HACKER_PASSWORD)
-    imageTag: "test"
+    imageTag: "poi-0.1"
     relativeSaveLocation: ""
     resourceGroupName: "saakhtaopenhackdevopsrg"
     registryName: "saakhtaopenhackacr"
