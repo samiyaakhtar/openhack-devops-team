@@ -23,8 +23,8 @@ steps:
 
     echo "az login -u $HACKER_LOGIN -p $HACKER_PASSWORD"
     az login -u $HACKER_LOGIN -p $HACKER_PASSWORD
-    az group create --location westus2 --name $resourceGroupName
-    az acr create --name $acrName --resource-group $resourceGroupName --sku Basic
+    # az group create --location westus2 --name $resourceGroupName
+    # az acr create --name $registryName --resource-group $resourceGroupName --sku Basic
 
     #get the acr repository id to tag image with.
     ACR_ID=`az acr list -g $resourceGroupName --query "[].{acrLoginServer:loginServer}" --output json | jq .[].acrLoginServer | sed 's/\"//g'`
@@ -55,4 +55,4 @@ steps:
     imageTag: 3.5
     relativeSaveLocation: ""
     resourceGroupName: "saakhtaopenhackdevopsrg"
-    acrName: "saakhtaopenhackacr"
+    registryName: "saakhtaopenhackacr"
