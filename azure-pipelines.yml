@@ -14,12 +14,15 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
-    ls
-    pwd
     cd ./apis/trips/tests/
     go get
     go test ./...
   displayName: "Trips unit test"
+
+- script: |
+    cd ./apis/user-java/
+    mvn clean test
+  displayName: "User-Java unit test"
 
 - script: |
     #DEBUG
@@ -46,10 +49,7 @@ steps:
     docker login $ACR_ID -u $registryName -p $acrPassword
     echo "Authenticated to ACR with username and password"
 
-    git clone https://github.com/samiyaakhtar/openhack-devops-team.git
-    cd openhack-devops-team
     wd=$(pwd)
-
     TAG=$ACR_ID"/devopsoh/"$imageTag
 
     cd ./apis/poi/web
