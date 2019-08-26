@@ -9,6 +9,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+
 steps:
 
 - script: |
@@ -32,6 +33,7 @@ steps:
     TAG=$ACR_ID"/devopsoh/"$imageTag
     echo "##vso[task.setvariable variable=TAG;isOutput=true]$TAG"
     echo "Setting variable TAG to $TAG"
+    echo '##vso[task.setvariable variable=sauce]crushed tomatoes'
   displayName: "Setup auth with azure"
   env:
     HACKER_LOGIN: $(HACKER_LOGIN)
@@ -65,7 +67,7 @@ steps:
 
 - script: |
     echo "variable is $TAG $(TAG)"
-
+    echo my pipeline variable is $(sauce)
     cd ./apis/poi/web
     docker build . -t $TAG-poi
     docker push $TAG-poi
