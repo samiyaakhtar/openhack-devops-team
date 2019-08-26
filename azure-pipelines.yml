@@ -52,3 +52,4 @@ steps:
     HACKER_PASSWORD: $(HACKER_PASSWORD)
     imageTag: 3.5
     relativeSaveLocation: ""
+    resourceGroupName: "test"
