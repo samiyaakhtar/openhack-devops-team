@@ -45,6 +45,7 @@ steps:
     TAG="$TAG-poi"
     echo "TAG: "$TAG
     cd ./openhack-devops-team/apis/poi/web
+    pwd
     docker build . -t $TAG
     docker push $TAG
     echo -e "\nSuccessfully pushed image: "$TAG
