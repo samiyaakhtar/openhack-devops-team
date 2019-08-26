@@ -41,30 +41,30 @@ steps:
     resourceGroupName: "saakhtaopenhackdevopsrg"
     registryName: "saakhtaopenhackacr"
 
-- script: |
-    cd ./apis/poi/tests/UnitTests
-    dotnet test 
-  displayName: "Poi unit test"
+# - script: |
+#     cd ./apis/poi/tests/UnitTests
+#     dotnet test 
+#   displayName: "Poi unit test"
+
+# - script: |
+#     cd ./apis/trips/tests/
+#     go get
+#     go test ./...
+#   displayName: "Trips unit test"
+
+# - script: |
+#     cd ./apis/user-java/
+#     mvn clean test
+#   displayName: "User-Java unit test"
+
+# - script: |
+#     cd ./apis/userprofile/
+#     npm install
+#     npm run test
+#   displayName: "Userprofile unit test"
 
 - script: |
-    cd ./apis/trips/tests/
-    go get
-    go test ./...
-  displayName: "Trips unit test"
-
-- script: |
-    cd ./apis/user-java/
-    mvn clean test
-  displayName: "User-Java unit test"
-
-- script: |
-    cd ./apis/userprofile/
-    npm install
-    npm run test
-  displayName: "Userprofile unit test"
-
-- script: |
-    echo "variable is $(TAG)"
+    echo "variable is $TAG $(TAG)"
 
     cd ./apis/poi/web
     docker build . -t $TAG-poi
