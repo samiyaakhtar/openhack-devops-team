@@ -54,6 +54,21 @@ steps:
     docker build . -t $TAG-trips
     docker push $TAG-trips
     echo -e "\nSuccessfully pushed image: "$TAG-trips
+    cd $wd
+
+    cd ./apis/user-java/
+    docker build . -t $TAG-userjava
+    docker push $TAG-userjava
+    echo -e "\nSuccessfully pushed image: "$TAG-userjava
+    cd $wd
+
+    cd ./apis/userprofile/
+    docker build . -t $TAG-userprofile
+    docker push $TAG-userprofile
+    echo -e "\nSuccessfully pushed image: "$TAG-userprofile
+    cd $wd
+
+    echo "Successfully pushed all 4 images for $imageTag"
   displayName: 'Run a multi-line script'
   env:
     HACKER_LOGIN: $(HACKER_LOGIN)
