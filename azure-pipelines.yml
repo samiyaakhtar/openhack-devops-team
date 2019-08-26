@@ -23,6 +23,7 @@ steps:
   displayName: "User-Java unit test"
 
 - script: |
+    cd ./apis/userprofile/
     npm install
     npm run test
   displayName: "Userprofile unit test"
