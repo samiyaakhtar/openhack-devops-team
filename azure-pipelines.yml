@@ -6,6 +6,8 @@
 trigger:
 - master
 
+
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -113,5 +115,5 @@ steps:
     HACKER_PASSWORD: $(HACKER_PASSWORD)
     imageTag: $(Build.BuildId)
     relativeSaveLocation: ""
-    resourceGroupName: "saakhtaopenhackdevopsrg"
-    registryName: "saakhtaopenhackacr"
+    resourceGroupName: "openhack6mr0rg"
+    registryName: "openhack6mr0acr"
